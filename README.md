@@ -28,14 +28,17 @@ flutter pub add geolocator`
 `final bool serviceEnabled = await Geolocator.isLocationServiceEnabled();`
 
  2️⃣ İzinleri kontrol et
+ 
 `LocationPermission permission = await Geolocator.checkPermission();`
 
  3️⃣ Gerekirse izin iste
+ 
 `if (permission == LocationPermission.denied) {
   permission = await Geolocator.requestPermission();
 }`
 
  4️⃣ Konumu al
+ 
 `final Position position = await Geolocator.getCurrentPosition(
   locationSettings: const LocationSettings(
     accuracy: LocationAccuracy.high,
@@ -53,12 +56,15 @@ flutter pub add dio`
 **Kullanım örneği:**
 
  1️⃣ Dio nesnesi oluştur
+ 
 `final dio = Dio();`
 
  2️⃣ GET isteği yap
+ 
 `final response = await dio.get('https://api.open-meteo.com/v1/forecast');`
 
  3️⃣ Yanıtı kontrol et
+ 
 `if (response.statusCode == 200) {
   print(response.data);
 } else {
