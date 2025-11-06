@@ -14,10 +14,7 @@ Basit ve hızlı bir **hava durumu uygulaması**. Konuma göre Open-Meteo’dan 
 ### Yapılandırma (API)
 - Open-Meteo günlük/saatlik değişkenleri URL parametreleriyle seçilir.
 - Örnek(günlük):
-    'https://api.open-meteo.com/v1/forecast
-  ?latitude=41.01&longitude=28.97
-  &daily=temperature_2m_max,temperature_2m_min,weathercode
-  &timezone=auto'
+    'https://api.open-meteo.com/v1/forecast?latitude=41.01&longitude=28.97&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto'
 
 ### İzinler
 - Konum kullanacaksan Android/iOS'ta ilgili location izinlerini ekle.
