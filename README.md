@@ -22,6 +22,7 @@ Cihaz konumunu almak için **Geolocator** paketi kullanılır.
 `bash
 flutter pub add geolocator`
 **Kullanım Örneği:**
+
 `// 1️⃣ Servis açık mı kontrol et
 final bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
 
@@ -49,6 +50,7 @@ print(position);`
 `bash
 flutter pub add dio`
 **Kullanım örneği:**
+
 `// 1️⃣ Dio nesnesi oluştur
 final dio = Dio();
 
