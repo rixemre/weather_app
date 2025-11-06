@@ -6,8 +6,6 @@ import 'package:hello_flutter/weather_app/models/weather_models.dart';
 
 class WeatherService {
   Future<List<WeatherModels>> getWeatherData() async {
-    // ... (Konum izni kodlarınız burada aynı kalıyor) ...
-
     //Kullanıcının konum bilgisini açıp açmadığını kontrol ediyoruz
     final bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
@@ -30,25 +28,23 @@ class WeatherService {
       locationSettings: const LocationSettings(accuracy: LocationAccuracy.high),
     );
 
+    //kullanıcının konumundan enlem ve boylam bulunup api adresine request atılır
     final double lat = position.latitude;
     final double lon = position.longitude;
     final url =
         'https://api.open-meteo.com/v1/forecast'
-        '?latitude=$lat'
-        '&longitude=$lon'
-        '&daily=temperature_2m_max,temperature_2m_min'
-        '&forecast_days=7'
-        '&timezone=auto';
+        '?latitude=$lat&longitude=$lon&daily=weather_code,'
+        'temperature_2m_max,temperature_2m_min';
 
     final dio = Dio();
+    //request attığımız satır
     final response = await dio.get(url);
 
     if (response.statusCode != 200) {
       return Future.error("Bir hata oluştu!");
     }
 
-    // --- BURADAN İTİBAREN DEĞİŞİKLİK BAŞLIYOR ---
-
+    //api'dan aldığımız response'u çekiyoruz
     final data = response.data;
 
     // API'den gelen "daily" ve "daily_units" bloklarını alıyoruz
@@ -59,8 +55,9 @@ class WeatherService {
     final timeList = dailyData['time'] as List;
     final maxTempList = dailyData['temperature_2m_max'] as List;
     final minTempList = dailyData['temperature_2m_min'] as List;
+    final weatherCodeList = dailyData['weather_code'] as List;
 
-    // Sıcaklık birimini alıyoruz (birim hepsinde aynıdır)
+    // Sıcaklık birimini alıyoruz (birim hepsinde aynı)
     final unit = dailyUnitsData['temperature_2m_max'] as String;
 
     // Döneceğimiz boş listeyi oluşturuyoruz
@@ -73,10 +70,17 @@ class WeatherService {
       // API'den gelen değer 'num' (int veya double) olabilir, 'toDouble()' ile garantiliyoruz
       final maxTemp = (maxTempList[i] as num).toDouble();
       final minTemp = (minTempList[i] as num).toDouble();
+      final wCode = (weatherCodeList[i] as num).toDouble();
 
       // Oluşturduğumuz modeli listeye ekliyoruz
       forecasts.add(
-        WeatherModels(gun: day, max: maxTemp, min: minTemp, birim: unit),
+        WeatherModels(
+          gun: day,
+          max: maxTemp,
+          min: minTemp,
+          weatherCode: wCode,
+          birim: unit,
+        ),
       );
     }
 
