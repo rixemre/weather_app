@@ -23,19 +23,20 @@ Cihaz konumunu almak için **Geolocator** paketi kullanılır.
 flutter pub add geolocator`
 **Kullanım Örneği:**
 
-`// 1️⃣ Servis açık mı kontrol et
-final bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+ 1️⃣ Servis açık mı kontrol et
 
-// 2️⃣ İzinleri kontrol et
-LocationPermission permission = await Geolocator.checkPermission();
+`final bool serviceEnabled = await Geolocator.isLocationServiceEnabled();`
 
-// 3️⃣ Gerekirse izin iste
-if (permission == LocationPermission.denied) {
+ 2️⃣ İzinleri kontrol et
+`LocationPermission permission = await Geolocator.checkPermission();`
+
+ 3️⃣ Gerekirse izin iste
+`if (permission == LocationPermission.denied) {
   permission = await Geolocator.requestPermission();
-}
+}`
 
-// 4️⃣ Konumu al
-final Position position = await Geolocator.getCurrentPosition(
+ 4️⃣ Konumu al
+`final Position position = await Geolocator.getCurrentPosition(
   locationSettings: const LocationSettings(
     accuracy: LocationAccuracy.high,
   ),
@@ -51,19 +52,18 @@ print(position);`
 flutter pub add dio`
 **Kullanım örneği:**
 
-`// 1️⃣ Dio nesnesi oluştur
-final dio = Dio();
+ 1️⃣ Dio nesnesi oluştur
+`final dio = Dio();`
 
-// 2️⃣ GET isteği yap
-final response = await dio.get('https://api.open-meteo.com/v1/forecast');
+ 2️⃣ GET isteği yap
+`final response = await dio.get('https://api.open-meteo.com/v1/forecast');`
 
-// 3️⃣ Yanıtı kontrol et
-if (response.statusCode == 200) {
+ 3️⃣ Yanıtı kontrol et
+`if (response.statusCode == 200) {
   print(response.data);
 } else {
   print("İstek başarısız oldu: ${response.statusCode}");
-}
-`
+}`
 
 ### Yapılandırma (API)
 - Open-Meteo günlük/saatlik değişkenleri URL parametreleriyle seçilir.
